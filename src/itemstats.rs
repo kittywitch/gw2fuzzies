@@ -6,7 +6,7 @@ use serde::{Deserialize, Serialize};
 /*
 this tells serde (the data serialization and deserialization library i would generally recommend, alongside serde_json for any JSON data to allow deserialization and serialization of that type when found in any data input provided to serde
 */
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Clone, Debug, Serialize, Deserialize)]
 pub struct ItemStats {
     pub id: usize,
     pub name: String,
@@ -14,7 +14,7 @@ pub struct ItemStats {
     pub attributes: Vec<Attribute>,
 }
 
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Clone, Debug, Serialize, Deserialize)]
 pub struct Attribute {
     pub attribute: String,
     pub multiplier: f32,
