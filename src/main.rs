@@ -1,18 +1,20 @@
 mod api;
-use std::env::{current_dir, current_exe};
-
-use futures_util::{SinkExt, StreamExt, TryStreamExt};
-use tokio_into_sink::IntoSinkExt as _;
 use {
     crate::api::*,
+    futures_util::{SinkExt, StreamExt, TryStreamExt},
     log,
-    std::{path::PathBuf, sync::Arc},
+    std::{
+        env::{current_dir, current_exe},
+        path::PathBuf,
+        sync::Arc,
+    },
     strum_macros::Display,
     tokio::{
-        fs::{File, create_dir_all},
+        fs::{create_dir_all, File},
         sync::Semaphore,
         task::JoinSet,
     },
+    tokio_into_sink::IntoSinkExt as _,
 };
 
 async fn get_kind_ids(kind: &String) -> anyhow::Result<Vec<u32>> {
