@@ -14,6 +14,10 @@ use {
         sync::Semaphore,
         task::JoinSet,
     },
+    clap::{
+        Parser,
+        Subcommand,
+    },
     tokio_into_sink::IntoSinkExt as _,
 };
 
@@ -86,11 +90,27 @@ enum Api {
     Specializations,
 }
 
+#[derive(Parser, Debug)]
+#[command(version, about, long_about = None)]
+struct Args {
+    #[command(subcommand)]
+    verb: Verb,
+}
+
+#[derive(Subcommand, Debug)]
+enum Verb {
+    #[command(arg_required_else_help = true)]
+    Download { kind: String },
+}
+
 #[tokio::main]
 async fn main() -> anyhow::Result<()> {
     pretty_env_logger::init();
+    let args = Args::parse();
 
-    download_kind_json(100, Api::Specializations.to_string()).await?;
+    match args.verb {
+        Verb::Download { kind } => download_kind_json(100, kind).await?,
+    }
 
     Ok(())
 }
