@@ -109,6 +109,7 @@ struct Download {
             default_value_t = 100,
             default_missing_value = "100",
     )]
+    /// Simultaneous download limit
     limit: usize,
 }
 
