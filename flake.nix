@@ -1,5 +1,5 @@
 {
-  description = "TaimiHUD; timers, markers and hopefully paths for raidcore.gg nexus";
+  description = "gw2fuzzies, eventually a fuzzer for builds";
   inputs = {
     flake-compat = {
       url = "github:edolstra/flake-compat";
@@ -28,21 +28,7 @@
           inherit system;
         };
 
-        # TaimiHUD Package
-        packageToolchain = with fenix.packages.${system};
-          combine [
-            minimal.rustc
-            minimal.cargo
-            targets.x86_64-pc-windows-gnu.latest.rust-std
-          ];
-
-        packageCraneLib = (crane.mkLib pkgs).overrideToolchain (p: packageToolchain);
-
-        taimiHUD = pkgs.callPackage ./package.nix {
-          craneLib = packageCraneLib;
-        };
-
-        # TaimiHUD devShell
+        # fuzzies devShell
         shellToolchain = with fenix.packages.${system};
           combine [
             complete
@@ -51,19 +37,13 @@
 
         shellCraneLib = (crane.mkLib pkgs).overrideToolchain (p: shellToolchain);
 
-        taimiShell = import ./shell.nix {
+        fuzziesShell = import ./shell.nix {
           inherit fenix pkgs system;
         };
       in
       rec {
-        defaultPackage = packages.x86_64-pc-windows-gnu;
         inherit pkgs;
-        devShells.default = taimiShell;
-
-        packages = {
-          inherit taimiHUD;
-          default = taimiHUD;
-        };
+        devShells.default = fuzziesShell;
       });
 }
 

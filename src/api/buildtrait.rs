@@ -10,7 +10,7 @@ pub enum TraitSlot {
 }
 
 #[derive(Clone, Debug, Serialize, Deserialize)]
-pub struct GW2Trait {
+pub struct BuildTrait {
     pub id: usize,
     pub name: String,
     pub icon: String,
