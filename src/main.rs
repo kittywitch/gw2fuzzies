@@ -99,6 +99,7 @@ struct Args {
 
 #[derive(Parser, Debug)]
 struct Download {
+    /// Provide a GW2 API endpoint, e.g. traits, skills, itemstats, specializations.
     kind: String,
     #[arg(
             long,
