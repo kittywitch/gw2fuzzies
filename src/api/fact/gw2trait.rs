@@ -24,7 +24,6 @@ pub enum TraitFact {
     Unblockable(FactUnblockable),
 }
 
-
 #[derive(Clone, Debug, Serialize, Deserialize)]
 pub struct TraitedFact {
     #[serde(flatten)]
@@ -32,5 +31,4 @@ pub struct TraitedFact {
 
     pub requires_trait: usize,
     pub overrides: Option<usize>,
-
 }

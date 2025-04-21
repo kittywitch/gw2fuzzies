@@ -11,7 +11,7 @@ pkgs.callPackage
     depsBuildBuild = [
       pkg-config
       openssl
-    ];
+  ];
   LD_LIBRARY_PATH = lib.makeLibraryPath [ openssl ];
     nativeBuildInputs = [
       (fenix'.combine [

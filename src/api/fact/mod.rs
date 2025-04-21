@@ -3,8 +3,5 @@ pub mod gw2trait;
 
 pub use {
     fact::*,
-    gw2trait::{
-        TraitFact,
-        TraitedFact,
-    },
+    gw2trait::{TraitFact, TraitedFact},
 };

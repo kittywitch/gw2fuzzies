@@ -97,7 +97,6 @@ pub struct FactNoData {
     pub common: FactCommon,
 }
 
-
 #[derive(Clone, Debug, Serialize, Deserialize)]
 pub struct FactNumber {
     #[serde(flatten)]
@@ -153,7 +152,6 @@ pub struct FactTime {
 
     duration: usize,
 }
-
 
 #[derive(Clone, Debug, Serialize, Deserialize)]
 pub struct FactUnblockable {

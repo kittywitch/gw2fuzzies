@@ -1,8 +1,5 @@
 use {
-    super::fact::{
-        TraitFact,
-        TraitedFact,
-    },
+    super::fact::{TraitFact, TraitedFact},
     serde::{Deserialize, Serialize},
 };
 

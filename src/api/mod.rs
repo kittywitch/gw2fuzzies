@@ -1,12 +1,9 @@
-pub mod itemstats;
 pub mod fact;
 pub mod gw2trait;
+pub mod itemstats;
 
 pub use {
-    itemstats::{
-        ItemStats,
-        StatAttribute,
-    },
-    gw2trait::*,
     fact::*,
+    gw2trait::*,
+    itemstats::{ItemStats, StatAttribute},
 };

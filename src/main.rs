@@ -1,23 +1,17 @@
 mod api;
 use std::env::{current_dir, current_exe};
 
-use tokio_into_sink::IntoSinkExt as _;
 use futures_util::{SinkExt, StreamExt, TryStreamExt};
+use tokio_into_sink::IntoSinkExt as _;
 use {
-    strum_macros::Display,
     crate::api::*,
     log,
-    std::{
-        path::PathBuf,
-        sync::Arc,
-    },
+    std::{path::PathBuf, sync::Arc},
+    strum_macros::Display,
     tokio::{
+        fs::{File, create_dir_all},
         sync::Semaphore,
         task::JoinSet,
-        fs::{
-            File,
-            create_dir_all,
-        },
     },
 };
 
@@ -28,19 +22,25 @@ async fn get_kind_ids(kind: &String) -> anyhow::Result<Vec<u32>> {
 }
 
 async fn download_kind_json(simultaneous_limit: usize, kind: String) -> anyhow::Result<()> {
-    log::info!("Preparing to download all {kind} with a simultaneous download limit of {simultaneous_limit}!");
+    log::info!(
+        "Preparing to download all {kind} with a simultaneous download limit of {simultaneous_limit}!"
+    );
 
     let executable_folder = match current_exe()?.parent() {
         Some(folder) => folder.to_path_buf(),
         None => current_dir()?.to_path_buf(),
     };
 
-    let ids=  get_kind_ids(&kind).await?;
+    let ids = get_kind_ids(&kind).await?;
     let mut set = JoinSet::new();
     let path_str = format!("{kind}/");
     let path = executable_folder.join(path_str);
 
-    log::info!("Preparing to download all {} {kind} with a simultaneous download limit of {simultaneous_limit} to {:?}", ids.len(), path);
+    log::info!(
+        "Preparing to download all {} {kind} with a simultaneous download limit of {simultaneous_limit} to {:?}",
+        ids.len(),
+        path
+    );
     create_dir_all(&path).await?;
 
     let semaphore = Arc::new(Semaphore::new(simultaneous_limit));
@@ -64,7 +64,7 @@ async fn download_kind_json(simultaneous_limit: usize, kind: String) -> anyhow::
             drop(permit);
             Ok::<(), anyhow::Error>(())
         });
-   }
+    }
 
     while let Some(res) = set.join_next().await {
         res??;
