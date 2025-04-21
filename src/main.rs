@@ -81,13 +81,14 @@ enum Api {
     Traits,
     Skills,
     ItemStats,
+    Specializations,
 }
 
 #[tokio::main]
 async fn main() -> anyhow::Result<()> {
     pretty_env_logger::init();
 
-    download_kind_json(100, Api::Traits.to_string()).await?;
+    download_kind_json(100, Api::Specializations.to_string()).await?;
 
     Ok(())
 }
