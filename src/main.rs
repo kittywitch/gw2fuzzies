@@ -97,10 +97,25 @@ struct Args {
     verb: Verb,
 }
 
+#[derive(Parser, Debug)]
+struct Download {
+    kind: String,
+    #[arg(
+            long,
+            short,
+            require_equals = false,
+            value_name = "limit",
+            num_args = 0..=1,
+            default_value_t = 100,
+            default_missing_value = "100",
+    )]
+    limit: usize,
+}
+
 #[derive(Subcommand, Debug)]
 enum Verb {
     #[command(arg_required_else_help = true)]
-    Download { kind: String },
+    Download(Download),
 }
 
 #[tokio::main]
@@ -109,7 +124,7 @@ async fn main() -> anyhow::Result<()> {
     let args = Args::parse();
 
     match args.verb {
-        Verb::Download { kind } => download_kind_json(100, kind).await?,
+        Verb::Download (download) => download_kind_json(download.limit, download.kind).await?,
     }
 
     Ok(())
