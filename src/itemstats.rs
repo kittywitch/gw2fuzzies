@@ -8,15 +8,15 @@ this tells serde (the data serialization and deserialization library i would gen
 */
 #[derive(Debug, Serialize, Deserialize)]
 pub struct ItemStats {
-    id: usize,
-    name: String,
+    pub id: usize,
+    pub name: String,
     // a Vec is a ...list?
-    attributes: Vec<Attribute>,
+    pub attributes: Vec<Attribute>,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
-struct Attribute {
-    attribute: String,
-    multiplier: f32,
-    value: u32,
+pub struct Attribute {
+    pub attribute: String,
+    pub multiplier: f32,
+    pub value: u32,
 }

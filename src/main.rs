@@ -7,5 +7,7 @@ async fn main() -> anyhow::Result<()> {
     let item_stats: ItemStats = reqwest::get(url).await?.json().await?;
     log::info!("{:?}", item_stats);
     println!("{:?}", item_stats);
+    let attribute = item_stats.attributes.iter().find(|attr| attr.attribute == "Power");
+    println!("{:?}", attribute);
     Ok(())
 }
